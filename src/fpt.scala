@@ -29,9 +29,11 @@ object fptRunner {
 
   def fermatTest(n:BigInteger, maxIterations:BigInteger): Boolean = {
 
+    //refactor for k iterations
     var a = maxIterations;
 
     while(a.compareTo(BigInteger.ZERO) > 0 && a != BigInteger.ONE) {
+      //refactor to randomly select a
       a = a.subtract(BigInteger.ONE);
         val r = a.modPow(maxIterations, n);
         println("Iteration: " + a + " r = " + r);
