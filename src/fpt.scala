@@ -1,5 +1,8 @@
 import scala.util;
-import java.math.BigInteger;
+import java.math.BigInteger
+
+import scala.util.Random
+;
 
 object fptRunner {
 
@@ -20,59 +23,30 @@ object fptRunner {
     sb.append("----                -----                    _____     \n");
     sb.append("----                -----                    _____     \n");
 
-    sb.append("             Fermat's Primealiy Test                   \n");
+    sb.append("             Fermat's Primality Test                   \n");
     return sb.toString();
   }
 
-  def fermatTest(n:Int): Boolean = {
+  def fermatTest(n:BigInteger, maxIterations:BigInteger): Boolean = {
 
-    var isPrime = false;
+    var a = maxIterations;
 
-    val ZERO = BigInteger.valueOf(0);
-    val ONE = BigInteger.valueOf(1);
-    val TWO = BigInteger.valueOf(2);
-
-    println("n = " + n);
-
-    val k = 1 << n;	// 2^n
-    println("2^n = "+ k);
-    val fermat = ONE.shiftLeft(k).add(ONE);	// 2^k + 1
-    println("fermat = " + fermat);
-    val c = (1 << (n-1)) - 1;	// 2^(n-1) - 1
-    println("2^(n-1) - 1 = " + c);
-    var s = BigInteger.valueOf(8);
-    println("s = " + s);
-    var i = 0;
-    for (i <- 0 to c) {
-      // (s^4 - 4*s^2 + 2) mod fermat
-      val b = s.modPow(TWO, fermat);
-      println("b = " + b);
-      s = b.pow(2).subtract(b.shiftLeft(2)).add(TWO);
-      println("s = " + s);
+    while(a.compareTo(BigInteger.ZERO) > 0 && a != BigInteger.ONE) {
+      a = a.subtract(BigInteger.ONE);
+        val r = a.modPow(maxIterations, n);
+        println("Iteration: " + a + " r = " + r);
+        if (!r.equals(BigInteger.ONE)) return false;
     }
-    s = s.mod(fermat);
-    println("s:after = " + s);
+    return true;
 
-    if (s.equals(ZERO)) isPrime = true; else isPrime = false;
-    
-    return isPrime;
-  }
-
-  def printResult(isPrime:Boolean): String = {
-    var result = "";
-    if(isPrime) result = "Likely Prime" else result = "Composite";
-    return result;
   }
 
   def main(args: Array[String]) {
     println(printHeader());
+    val sut = new BigInteger("31");
+    val isPrime = fermatTest(sut, sut.subtract(BigInteger.ONE));
 
-    val time = System.currentTimeMillis();
-
-    val isPrime = fermatTest(5);
-    println(printResult(isPrime));
-
-    println(System.currentTimeMillis() - time + " ms");
+    if(isPrime)  println("Likely Prime") else println("Composite");
 
 
   }
