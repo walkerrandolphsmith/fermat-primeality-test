@@ -1,8 +1,4 @@
-import scala.util;
-import java.math.BigInteger
-
-import scala.util.Random
-;
+import java.math.BigInteger;
 
 object fptRunner {
 
