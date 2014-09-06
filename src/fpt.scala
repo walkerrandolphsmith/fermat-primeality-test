@@ -1,4 +1,6 @@
-import java.math.BigInteger;
+import java.math.BigInteger
+import java.util.Scanner
+;
 
 object fptRunner {
 
@@ -18,9 +20,26 @@ object fptRunner {
   }
 
   def main(args: Array[String]) {
-    val sut = new BigInteger("31");
-    val isPrime = fermatTest(sut, sut.subtract(BigInteger.ONE));
+    val scan = new Scanner(System.in);
+    while (scan.hasNextLine()) {
+      val theLine = scan.nextLine();
+      if (theLine.equals("")) {
 
-    if (isPrime) println("Likely Prime") else println("Composite");
+      }
+      val scanner = new Scanner(theLine);
+      while (scanner.hasNextBigInteger()) {
+        //val fermatPrime = new BigInteger("31");
+        val fermatPrime = scanner.nextBigInteger();
+
+        if (fermatPrime.compareTo(BigInteger.ZERO) > 0) {
+          val isPrime = fermatTest(fermatPrime, fermatPrime.subtract(BigInteger.ONE));
+          if (isPrime) println("Likely Prime") else println("Composite");
+        } else {
+          println("Positive Integers only, ");
+        }
+      }
+
+    }
   }
+
 }

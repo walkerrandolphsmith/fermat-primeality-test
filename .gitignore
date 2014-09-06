@@ -7,7 +7,6 @@
 /classes
 /dist
 /out
-/.idea
 /SDK/*SDK
 /*.bat
 .idea/workspace.xml
